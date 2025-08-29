@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>Advanced Sentiment Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Sentiment Analysis (VADER)</h1>
+    <form method="POST">
+        <label>Say Something:</label><br>
+        <input type="text" name="text1" placeholder="Type here...">
+        <input type="submit" value="Analyze">
+    </form>
+
+    {% if sentiment_label %}
+        <div class="result {{ sentiment_color }}">
+            The sentiment of "<b>{{ text1 }}</b>" is:
+            <span class="{{ sentiment_color }}">{{ sentiment_label }}</span>
+        </div>
+
+        <!-- Wrapper for table and chart side by side -->
+        <div class="results-container">
+            <!-- Table -->
+            <div class="table-section">
+                <h3>Score Table</h3>
+                <table>
+                    <tr><th>Metric</th><th>Score</th></tr>
+                    <tr><td>Positive</td><td>{{ scores['pos'] }}</td></tr>
+                    <tr><td>Neutral</td><td>{{ scores['neu'] }}</td></tr>
+                    <tr><td>Negative</td><td>{{ scores['neg'] }}</td></tr>
+                    <tr><td>Compound</td><td>{{ scores['compound'] }}</td></tr>
+                </table>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-section">
+                <h3>Sentiment Distribution</h3>
+                <img src="{{ url_for('static', filename='sentiment_chart.png') }}" alt="Sentiment Chart">
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>
